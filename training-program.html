@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6-Week Training Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --card: #161616;
+    --border: #242424;
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --text: #f0f0f0;
+    --muted: #666;
+    --push-color: #ff6b35;
+    --pull-color: #4fc3f7;
+    --legs-color: #a78bfa;
+    --full-color: #e8ff47;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .hero {
+    padding: 60px 40px 40px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(232,255,71,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+
+  h1 span { color: var(--accent); }
+
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.6;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-strength { background: rgba(255,107,53,0.15); color: var(--push-color); border: 1px solid rgba(255,107,53,0.3); }
+  .badge-muscle { background: rgba(167,139,250,0.15); color: var(--legs-color); border: 1px solid rgba(167,139,250,0.3); }
+  .badge-lean { background: rgba(232,255,71,0.12); color: var(--accent); border: 1px solid rgba(232,255,71,0.25); }
+
+  /* WEEK NAV */
+  .week-nav {
+    display: flex;
+    gap: 0;
+    padding: 0 40px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .week-btn {
+    padding: 16px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .week-btn:hover { color: var(--text); }
+  .week-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* PHASE BANNER */
+  .phase-banner {
+    margin: 30px 40px 0;
+    padding: 16px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .phase-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .phase-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+
+  .phase-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .phase-tag {
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    background: rgba(232,255,71,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(232,255,71,0.2);
+  }
+
+  /* DAY GRID */
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 24px 40px 60px;
+  }
+
+  .day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+
+  .day-card:hover {
+    transform: translateY(-2px);
+    border-color: #333;
+  }
+
+  .day-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .day-number {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .day-type {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+  }
+
+  .day-type.push { color: var(--push-color); }
+  .day-type.pull { color: var(--pull-color); }
+  .day-type.legs { color: var(--legs-color); }
+  .day-type.full { color: var(--full-color); }
+  .day-type.rest { color: var(--muted); }
+
+  .day-focus-badge {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .focus-upper { background: rgba(255,107,53,0.1); color: var(--push-color); }
+  .focus-back { background: rgba(79,195,247,0.1); color: var(--pull-color); }
+  .focus-lower { background: rgba(167,139,250,0.1); color: var(--legs-color); }
+  .focus-total { background: rgba(232,255,71,0.1); color: var(--accent); }
+  .focus-rest { background: rgba(102,102,102,0.1); color: var(--muted); }
+
+  .exercises-list {
+    padding: 4px 0;
+  }
+
+  .exercise-row {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .exercise-row:last-child { border-bottom: none; }
+
+  .ex-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .ex-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .ex-sets {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .ex-sets strong {
+    display: block;
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* PROGRESSION NOTE */
+  .progression-block {
+    margin: 0 40px 24px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+  }
+
+  .prog-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .prog-items {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .prog-item {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .prog-item strong { color: var(--text); }
+
+  /* PHASE LEGEND */
+  .legend {
+    display: flex;
+    gap: 24px;
+    padding: 0 40px 20px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero, .week-nav, .days-grid, .phase-banner, .progression-block, .legend {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    h1 { font-size: 52px; }
+    .days-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Your Custom 6-Week Block</div>
+  <h1>TRAIN.<br><span>GROW.</span><br>SHRED.</h1>
+  <p class="hero-sub">Push / Pull / Push / Pull / Legs / Full Body — 6 days per week. Built around your current lifts. Training to failure where it matters.</p>
+  <div class="hero-badges">
+    <span class="badge badge-strength">Strength Gains</span>
+    <span class="badge badge-muscle">Hypertrophy</span>
+    <span class="badge badge-lean">Fat Loss</span>
+  </div>
+</div>
+
+<div class="week-nav">
+  <button class="week-btn active" onclick="showWeek(1)">Week 1</button>
+  <button class="week-btn" onclick="showWeek(2)">Week 2</button>
+  <button class="week-btn" onclick="showWeek(3)">Week 3</button>
+  <button class="week-btn" onclick="showWeek(4)">Week 4</button>
+  <button class="week-btn" onclick="showWeek(5)">Week 5</button>
+  <button class="week-btn" onclick="showWeek(6)">Week 6</button>
+</div>
+
+<div id="program-container"></div>
+
+<script>
+const phases = {
+  1: { name: "PHASE 1 — FOUNDATION", weeks: [1,2], tags: ["Volume Base", "Learn the Pattern", "Sets: 3–4"], color: "#e8ff47" },
+  2: { name: "PHASE 2 — OVERLOAD", weeks: [3,4], tags: ["Progressive Overload", "Add Weight or Reps", "Sets: 4"], color: "#ff6b35" },
+  3: { name: "PHASE 3 — INTENSITY PEAK", weeks: [5,6], tags: ["Maximum Intensity", "Top Sets to Failure", "Sets: 4–5"], color: "#a78bfa" }
+};
+
+function getPhase(week) {
+  for (const [, p] of Object.entries(phases)) {
+    if (p.weeks.includes(week)) return p;
+  }
+}
+
+const program = {
+  days: [
+    {
+      day: "Day 1",
+      type: "PUSH A",
+      typeClass: "push",
+      focus: "Chest & Shoulders",
+      focusClass: "focus-upper",
+      exercises: [
+        { name: "Dumbbell Shoulder Press", note: "Your main lift — push the weight up", sets: w => `${w<=2?3:4} sets`, reps: w => w<=2?"6–8 reps":"5–7 reps (heavier)" },
+        { name: "Plate-Loaded Seated Bench Press", note: "Compound chest priority", sets: w => `${w<=2?3:4} sets`, reps: w => w<=2?"6–8 reps":"5–6 reps" },
+        { name: "Dumbbell Flyes", note: "Peak contraction, control the negative", sets: w => "3 sets", reps: w => w<=4?"10–12 reps":"8–10 reps (heavier)" },
+        { name: "Cable Lateral Raises", note: "Superset with rear delt if possible", sets: w => "3 sets", reps: w => "12–15 reps" },
+        { name: "Tricep Pushdown (rope)", note: "Squeeze at bottom", sets: w => "3 sets", reps: w => "10–12 reps" },
+        { name: "Overhead Tricep Extension", note: "Long head emphasis", sets: w => w<=4?"2 sets":"3 sets", reps: w => "10–12 reps" },
+      ]
+    },
+    {
+      day: "Day 2",
+      type: "PULL A",
+      typeClass: "pull",
+      focus: "Back & Biceps",
+      focusClass: "focus-back",
+      exercises: [
+        { name: "Weighted Pull-Ups or Lat Pulldown", note: "If you can do 8+ pull-ups, add weight", sets: w => `${w<=2?3:4} sets`, reps: w => w<=2?"6–8 reps":"5–7 reps" },
+        { name: "Barbell or DB Row", note: "Drive elbow back, chest to pad", sets: w => `${w<=2?3:4} sets`, reps: w => "6–8 reps" },
+        { name: "Seated Cable Row (close grip)", note: "Full stretch at front, hold squeeze", sets: w => "3 sets", reps: w => "10–12 reps" },
+        { name: "Face Pulls", note: "Rear delts + external rotators", sets: w => "3 sets", reps: w => "15 reps" },
+        { name: "Incline DB Curl", note: "Full stretch at bottom", sets: w => "3 sets", reps: w => "10–12 reps" },
+        { name: "Hammer Curl", note: "Brachialis & brachioradialis", sets: w => w<=4?"2 sets":"3 sets", reps: w => "10–12 reps" },
+      ]
+    },
+    {
+      day: "Day 3",
+      type: "PUSH B",
+      typeClass: "push",
+      focus: "Shoulder & Tricep Focus",
+      focusClass: "focus-upper",
+      exercises: [
+        { name: "Pendulum Squat", note: "Quad focus — full depth", sets: w => `${w<=2?3:4} sets`, reps: w => w<=2?"6 reps":"5–6 reps (add load)" },
+        { name: "Hex Bar Deadlift / Romanian DL", note: "Alternate each week", sets: w => `${w<=2?3:4} sets`, reps: w => "6–8 reps" },
+        { name: "Incline DB Press", note: "Upper chest builder", sets: w => "3 sets", reps: w => "8–10 reps" },
+        { name: "Arnold Press", note: "Full shoulder rotation", sets: w => "3 sets", reps: w => "10–12 reps" },
+        { name: "Cable Flyes (high to low)", note: "Lower chest emphasis", sets: w => "3 sets", reps: w => "12 reps" },
+        { name: "Dips (weighted if possible)", note: "Lean forward for chest, upright for tris", sets: w => w<=2?"2 sets":"3 sets", reps: w => "8–10 reps" },
+      ]
+    },
+    {
+      day: "Day 4",
+      type: "PULL B",
+      typeClass: "pull",
+      focus: "Rear Delt & Arm Focus",
+      focusClass: "focus-back",
+      exercises: [
+        { name: "Rack Pulls or Deadlift", note: "Heavy — keep it technical", sets: w => `${w<=2?3:4} sets`, reps: w => w<=2?"4–6 reps":"3–5 reps" },
+        { name: "Single Arm DB Row", note: "Full range — really stretch the lat", sets: w => "3 sets", reps: w => "8–10 reps each side" },
+        { name: "Chest-Supported Row (machine)", note: "Isolate back, remove lower back fatigue", sets: w => "3 sets", reps: w => "10–12 reps" },
+        { name: "Rear Delt Fly (cable or DB)", note: "Light, controlled — squeeze", sets: w => "3 sets", reps: w => "15 reps" },
+        { name: "EZ Bar Curl", note: "Heavier curling movement", sets: w => "3 sets", reps: w => w<=2?"10 reps":"8 reps" },
+        { name: "Cable Curl (single arm)", note: "Peak contraction focus", sets: w => "2 sets", reps: w => "12–15 reps" },
+      ]
+    },
+    {
+      day: "Day 5",
+      type: "LEGS",
+      typeClass: "legs",
+      focus: "Quads, Hamstrings & Glutes",
+      focusClass: "focus-lower",
+      exercises: [
+        { name: "Hex Bar Squat", note: "Your base movement — load it up", sets: w => `${w<=2?3:4} sets`, reps: w => w<=2?"6 reps":"5–6 reps" },
+        { name: "Pendulum Squat (pause rep)", note: "2-second pause at bottom", sets: w => "3 sets", reps: w => "6–8 reps" },
+        { name: "Romanian Deadlift", note: "Hamstring focus — feel the stretch", sets: w => "3 sets", reps: w => "8–10 reps" },
+        { name: "Leg Press (high foot placement)", note: "Glute emphasis", sets: w => "3 sets", reps: w => w<=4?"12 reps":"10 reps (add plates)" },
+        { name: "Leg Curl (machine)", note: "Full ROM, slow negative", sets: w => "3 sets", reps: w => "10–12 reps" },
+        { name: "Calf Raises (standing)", note: "Full stretch at bottom", sets: w => "4 sets", reps: w => "12–15 reps" },
+      ]
+    },
+    {
+      day: "Day 6",
+      type: "FULL BODY",
+      typeClass: "full",
+      focus: "Compound & Metabolic",
+      focusClass: "focus-total",
+      exercises: [
+        { name: "Barbell Squat or Goblet Squat", note: "Lighter than leg day — controlled", sets: w => "3 sets", reps: w => "8–10 reps" },
+        { name: "Weighted Push-Up or DB Bench", note: "Chest & tricep stimulus", sets: w => "3 sets", reps: w => "10–12 reps" },
+        { name: "Pull-Up or Lat Pulldown", note: "Back width maintenance", sets: w => "3 sets", reps: w => "8–10 reps" },
+        { name: "DB Shoulder Press", note: "Lighter — pump work", sets: w => "3 sets", reps: w => "12 reps" },
+        { name: "DB Lunges or Step-Ups", note: "Unilateral leg work", sets: w => "3 sets", reps: w => "10 reps each leg" },
+        { name: "Superset: Curl + Pushdown", note: "Finisher — arms", sets: w => "3 sets", reps: w => "12–15 reps each" },
+      ]
+    }
+  ],
+  progression: {
+    1: "Focus on form & establishing your baseline. Take your top set to failure, track every weight.",
+    2: "Add 2–5% weight where you hit the top of the rep range. Stay consistent.",
+    3: "Add reps before weight. Aim for 1–2 extra reps per session.",
+    4: "Deload optional — reduce weight by 10%, keep volume. Assess how your body feels.",
+    5: "Heaviest weeks. Push top sets hard. Drop sets on isolation work if recovering well.",
+    6: "Max effort week. Test your limits. Compare to Week 1 lifts — the gains will be visible."
+  }
+};
+
+function showWeek(week) {
+  document.querySelectorAll('.week-btn').forEach((b, i) => {
+    b.classList.toggle('active', i + 1 === week);
+  });
+
+  const phase = getPhase(week);
+  const prog = program.progression[week];
+
+  let html = `
+    <div class="phase-banner">
+      <div>
+        <div class="phase-label">Current Phase</div>
+        <div class="phase-name" style="color:${phase.color}">${phase.name}</div>
+      </div>
+      <div class="phase-tags">
+        ${phase.tags.map(t => `<span class="phase-tag" style="border-color:${phase.color}30;color:${phase.color};background:${phase.color}12">${t}</span>`).join('')}
+      </div>
+    </div>
+
+    <div class="progression-block">
+      <div class="prog-title">📋 Week ${week} Focus</div>
+      <div class="prog-items">
+        <div class="prog-item">${prog}</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--push-color)"></div>Push Days</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--pull-color)"></div>Pull Days</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--legs-color)"></div>Legs</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--full-color)"></div>Full Body</div>
+    </div>
+
+    <div class="days-grid">
+  `;
+
+  program.days.forEach(day => {
+    html += `
+      <div class="day-card">
+        <div class="day-header">
+          <div>
+            <div class="day-number">${day.day}</div>
+            <div class="day-type ${day.typeClass}">${day.type}</div>
+          </div>
+          <span class="day-focus-badge ${day.focusClass}">${day.focus}</span>
+        </div>
+        <div class="exercises-list">
+    `;
+
+    day.exercises.forEach(ex => {
+      html += `
+        <div class="exercise-row">
+          <div>
+            <div class="ex-name">${ex.name}</div>
+            <div class="ex-note">${ex.note}</div>
+          </div>
+          <div class="ex-sets">
+            <strong>${ex.sets(week)}</strong>
+            ${ex.reps(week)}
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div></div>`;
+  });
+
+  html += `</div>`;
+
+  document.getElementById('program-container').innerHTML = html;
+}
+
+showWeek(1);
+</script>
+</body>
+</html>
